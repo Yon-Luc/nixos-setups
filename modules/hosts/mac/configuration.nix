@@ -14,6 +14,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  programs.niri.enable = true;
+
   networking.hostName = "nixos-mac"; # Define your hostname.
  
   networking.networkmanager.enable = true;
