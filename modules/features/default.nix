@@ -7,7 +7,6 @@
       kitty
       btop
       nmap
-      code-cursor-fhs
       bun
       alacritty
       fastfetch
