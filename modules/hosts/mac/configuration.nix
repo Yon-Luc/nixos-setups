@@ -4,19 +4,18 @@
 
   {
   imports =
-    [ # Include the results of the hardware scan.
+    [ 
       self.nixosModules.macHardware
       self.nixosModules.niri
       self.nixosModules.packagesDefault
     ];
 
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   programs.niri.enable = true;
 
-  networking.hostName = "nixos-mac"; # Define your hostname.
+  networking.hostName = "nixos-mac"; 
  
   networking.networkmanager.enable = true;
 
@@ -55,7 +54,6 @@
 
   services.xserver.enable = true;
 
-  # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
@@ -94,7 +92,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
     ];
   };
 
