@@ -7,6 +7,7 @@
     [ # Include the results of the hardware scan.
       self.nixosModules.macHardware
       self.nixosModules.niri
+      self.nixosModules.packagesDefault
     ];
 
   # Bootloader.
@@ -100,13 +101,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-   git
-   gh
-   code-cursor-fhs
-   fastfetch
-   nmap
-   alacritty
-   pear-desktop
+    
   ];
 
    nixpkgs.config.permittedInsecurePackages = [
