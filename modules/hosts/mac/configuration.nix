@@ -10,6 +10,17 @@
       self.nixosModules.packagesDefault
       self.nixosModules.cursor
     ];
+    zramSwap = {
+      enable = true;
+      memoryPercent = 50;
+    };
+
+    swapDevices = [
+      {
+        device = "/swapfile";
+        size = 4096;
+      }
+    ];
 
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;

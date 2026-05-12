@@ -92,32 +92,24 @@
               name = "beardedtheme";
               publisher = "beardedbear";
               version = "9.3.0";
+              sha256 = "sha256-MwcxAFwP1usfs5K4e1nBxGetEHbAH1PzE1WT2kNW7Vs=";
             };
-            sha256 = "sha256-MwcxAFwP1usfs5K4e1nBxGetEHbAH1PzE1WT2kNW7Vs=";
           }
           {
             mktplcRef = {
               name = "es7-react-js-snippets";
               publisher = "dsznajder";
               version = "4.4.3";
+              sha256 = "sha256-QF950JhvVIathAygva3wwUOzBLjBm7HE3Sgcp7f20Pc=";
             };
-            sha256 = "sha256-QF950JhvVIathAygva3wwUOzBLjBm7HE3Sgcp7f20Pc=";
           }
           {
             mktplcRef = {
               name = "console-ninja";
               publisher = "wallabyjs";
               version = "1.0.527";
+              sha256 = "sha256-zQ/56HbcLxVKa2X37mnvdVEhVGYm9RQ01J0m34sA9sU=";
             };
-            sha256 = lib.fakeHash;
-          }
-          {
-            mktplcRef = {
-              name = "remote-ssh";
-              publisher = "anysphere";
-              version = "1.0.48";
-            };
-            sha256 = lib.fakeHash;
           }
         ]);
     };
