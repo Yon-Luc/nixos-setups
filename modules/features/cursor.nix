@@ -59,11 +59,9 @@
         };
       };
     };
-
     settingsJSON =
       pkgs.writeText "cursor-settings.json"
       (builtins.toJSON cursorSettings);
-
     realUsers = lib.filterAttrs (_: user: user.isNormalUser) config.users.users;
   in {
     environment.systemPackages = with pkgs; [
@@ -88,34 +86,41 @@
           usernamehw.errorlens
           yoavbls.pretty-ts-errors
         ])
-        ++ pkgs.vscode-utils.buildVscodeMarketplaceExtension [
+        ++ (map pkgs.vscode-utils.buildVscodeMarketplaceExtension [
           {
-            name = "beardedtheme";
-            publisher = "beardedbear";
-            version = "9.3.0";
-            sha256 = "MwcxAFwP1usfs5K4e1nBxGetEHbAH1PzE1WT2kNW7Vs=";
+            mktplcRef = {
+              name = "beardedtheme";
+              publisher = "beardedbear";
+              version = "9.3.0";
+            };
+            sha256 = "sha256-MwcxAFwP1usfs5K4e1nBxGetEHbAH1PzE1WT2kNW7Vs=";
           }
           {
-            name = "es7-react-js-snippets";
-            publisher = "dsznajder";
-            version = "4.4.3";
-            sha256 = "sha256-...";
+            mktplcRef = {
+              name = "es7-react-js-snippets";
+              publisher = "dsznajder";
+              version = "4.4.3";
+            };
+            sha256 = "sha256-QF950JhvVIathAygva3wwUOzBLjBm7HE3Sgcp7f20Pc=";
           }
           {
-            name = "console-ninja";
-            publisher = "wallabyjs";
-            version = "1.0.527";
-            sha256 = "sha256-...";
+            mktplcRef = {
+              name = "console-ninja";
+              publisher = "wallabyjs";
+              version = "1.0.527";
+            };
+            sha256 = lib.fakeHash;
           }
           {
-            name = "remote-ssh";
-            publisher = "anysphere";
-            version = "1.0.48";
-            sha256 = "sha256-...";
+            mktplcRef = {
+              name = "remote-ssh";
+              publisher = "anysphere";
+              version = "1.0.48";
+            };
+            sha256 = lib.fakeHash;
           }
-        ];
+        ]);
     };
-
     system.activationScripts.cursorSettings = {
       text = lib.concatMapStrings (
         user: let

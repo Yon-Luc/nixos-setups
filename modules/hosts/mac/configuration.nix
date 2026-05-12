@@ -8,6 +8,7 @@
       self.nixosModules.macHardware
       self.nixosModules.niri
       self.nixosModules.packagesDefault
+      self.nixosModules.cursor
     ];
 
     boot.loader.systemd-boot.enable = true;
