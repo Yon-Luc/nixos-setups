@@ -12,6 +12,7 @@
       fastfetch
       pear-desktop
       vesktop
+      chromium
     ];
   };
 }

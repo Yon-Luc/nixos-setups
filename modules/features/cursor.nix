@@ -59,60 +59,72 @@
         };
       };
     };
-    settingsJSON =
-      pkgs.writeText "cursor-settings.json"
-      (builtins.toJSON cursorSettings);
-    realUsers = lib.filterAttrs (_: user: user.isNormalUser) config.users.users;
-  in {
+
     environment.systemPackages = with pkgs; [
+      code-cursor-fhs
       nixd
       alejandra
     ];
-    programs.vscode = {
-      enable = true;
-      package = pkgs.code-cursor-fhs;
-      extensions =
-        (with pkgs.vscode-extensions; [
-          adpyke.codesnap
-          astro-build.astro-vscode
-          bbenoist.nix
-          biomejs.biome
-          bradlc.vscode-tailwindcss
-          esbenp.prettier-vscode
-          gruntfuggly.todo-tree
-          jnoortheen.nix-ide
-          johnpapa.vscode-peacock
-          unifiedjs.vscode-mdx
-          usernamehw.errorlens
-          yoavbls.pretty-ts-errors
-        ])
-        ++ (map pkgs.vscode-utils.buildVscodeMarketplaceExtension [
-          {
-            mktplcRef = {
-              name = "beardedtheme";
-              publisher = "beardedbear";
-              version = "9.3.0";
-              sha256 = "sha256-MwcxAFwP1usfs5K4e1nBxGetEHbAH1PzE1WT2kNW7Vs=";
-            };
-          }
-          {
-            mktplcRef = {
-              name = "es7-react-js-snippets";
-              publisher = "dsznajder";
-              version = "4.4.3";
-              sha256 = "sha256-QF950JhvVIathAygva3wwUOzBLjBm7HE3Sgcp7f20Pc=";
-            };
-          }
-          {
-            mktplcRef = {
-              name = "console-ninja";
-              publisher = "wallabyjs";
-              version = "1.0.527";
-              sha256 = "sha256-zQ/56HbcLxVKa2X37mnvdVEhVGYm9RQ01J0m34sA9sU=";
-            };
-          }
-        ]);
+
+    extensions =
+      (with pkgs.vscode-extensions; [
+        adpyke.codesnap
+        astro-build.astro-vscode
+        bbenoist.nix
+        biomejs.biome
+        bradlc.vscode-tailwindcss
+        esbenp.prettier-vscode
+        gruntfuggly.todo-tree
+        jnoortheen.nix-ide
+        johnpapa.vscode-peacock
+        unifiedjs.vscode-mdx
+        usernamehw.errorlens
+        yoavbls.pretty-ts-errors
+      ])
+      ++ (map pkgs.vscode-utils.buildVscodeMarketplaceExtension [
+        {
+          mktplcRef = {
+            name = "beardedtheme";
+            publisher = "beardedbear";
+            version = "9.3.0";
+            sha256 = "sha256-MwcxAFwP1usfs5K4e1nBxGetEHbAH1PzE1WT2kNW7Vs=";
+          };
+        }
+        {
+          mktplcRef = {
+            name = "es7-react-js-snippets";
+            publisher = "dsznajder";
+            version = "4.4.3";
+            sha256 = "sha256-QF950JhvVIathAygva3wwUOzBLjBm7HE3Sgcp7f20Pc=";
+          };
+        }
+        {
+          mktplcRef = {
+            name = "console-ninja";
+            publisher = "wallabyjs";
+            version = "1.0.527";
+            sha256 = "sha256-zQ/56HbcLxVKa2X37mnvdVEhVGYm9RQ01J0m34sA9sU=";
+          };
+        }
+      ]);
+
+    extensionsEnv = pkgs.buildEnv {
+      name = "cursor-extensions";
+      paths = extensions;
     };
+
+    settingsJSON =
+      pkgs.writeText "cursor-settings.json"
+      (builtins.toJSON cursorSettings);
+
+    realUsers = lib.filterAttrs (_: user: user.isNormalUser) config.users.users;
+  in {
+    environment.systemPackages = with pkgs; [
+      code-cursor-fhs
+      nixd
+      alejandra
+    ];
+
     system.activationScripts.cursorSettings = {
       text = lib.concatMapStrings (
         user: let
@@ -121,6 +133,22 @@
           mkdir -p ${settingsDir}
           cp --no-preserve=mode ${settingsJSON} ${settingsDir}/settings.json
           chown ${user.name} ${settingsDir}/settings.json
+        ''
+      ) (lib.attrValues realUsers);
+      deps = [];
+    };
+
+    system.activationScripts.cursorExtensions = {
+      text = lib.concatMapStrings (
+        user: ''
+          mkdir -p ${user.home}/.cursor/extensions
+          for ext in ${extensionsEnv}/share/vscode/extensions/*; do
+            extname=$(basename $ext)
+            if [ ! -e "${user.home}/.cursor/extensions/$extname" ]; then
+              ln -sf $ext ${user.home}/.cursor/extensions/$extname
+            fi
+          done
+          chown -R ${user.name} ${user.home}/.cursor/extensions
         ''
       ) (lib.attrValues realUsers);
       deps = [];
