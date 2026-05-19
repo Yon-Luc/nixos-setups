@@ -12,19 +12,12 @@
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
-    networking.hostName = "nixos";
-    networking.wireless.enable = true;
-    networking.networkmanager.wifi.powersave = false;
-    networking.networkmanager.wifi.macAddress = "permanent";
-
     systemd.network.networks."10-enp12s0" = {
       matchConfig.Name = "enp12s0";
       linkConfig.EEE = false;
       linkConfig.Advertise = ["1000baseT-full"];
       linkConfig.AutoNegotiation = false;
     };
-
-    networking.networkmanager.enable = true;
 
     services.xserver.enable = true;
 
@@ -35,8 +28,6 @@
       layout = "us";
       variant = "";
     };
-
-    # Optional: Bluetooth GUI manager
 
     security.rtkit.enable = true;
 
@@ -87,17 +78,26 @@
     services.hardware.openrgb.enable = true;
 
     networking = {
+      hostName = "nixos";
+      wireless.enable = true;
+
       interfaces = {
         enp12s0 = {
           wakeOnLan.enable = true;
         };
       };
+
+      networkmanager = {
+        enable = true;
+        wifi.powersave = false;
+        wifi.macAddress = "permanent";
+      };
+
       firewall = {
         allowedUDPPorts = [9];
+        allowedTCPPorts = [24800 8081 19000 19001 19006 22 3000 3306 3307 6379 3010];
       };
     };
-
-    networking.firewall.allowedTCPPorts = [24800 8081 19000 19001 19006 22 3000 3306 3307 6379 3010];
 
     system.stateVersion = "25.05";
   };
