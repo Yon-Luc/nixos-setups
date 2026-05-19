@@ -60,7 +60,17 @@
       ethtool
       beekeeper-studio
       pnpm
+      runc
+      conmon
     ];
     nixpkgs.config.permittedInsecurePackages = ["beekeeper-studio-5.6.5"];
+    virtualisation = {
+      containers.enable = true;
+      podman = {
+        enable = true;
+        dockerCompat = true;
+        defaultNetwork.settings.dns_enabled = true;
+      };
+    };
   };
 }

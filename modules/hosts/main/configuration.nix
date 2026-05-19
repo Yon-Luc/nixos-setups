@@ -86,15 +86,6 @@
 
     services.hardware.openrgb.enable = true;
 
-    virtualisation = {
-      containers.enable = true;
-      podman = {
-        enable = true;
-        dockerCompat = true;
-        defaultNetwork.settings.dns_enabled = true;
-      };
-    };
-
     networking = {
       interfaces = {
         enp12s0 = {
