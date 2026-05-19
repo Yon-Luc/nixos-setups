@@ -1,5 +1,6 @@
 {...}: {
   flake.nixosModules.settingsDefault = {...}: {
+    nixpkgs.config.allowUnfree = true;
     environment.variables = {
       TERMINAL = "alacritty";
     };
