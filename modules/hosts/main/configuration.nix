@@ -2,6 +2,10 @@
   flake.nixosModules.mainConfiguration = {pkgs, ...}: {
     imports = [
       self.nixosModules.mainHardware
+      self.nixosModules.packagesDefault
+      self.nixosModules.developmentDefault
+      self.nixosModules.gamesDefault
+      self.nixosModules.socialDefault
     ];
 
     boot.loader.systemd-boot.enable = true;
@@ -11,10 +15,6 @@
     networking.wireless.enable = true;
     networking.networkmanager.wifi.powersave = false;
     networking.networkmanager.wifi.macAddress = "permanent";
-
-    environment.variables = {
-      TERMINAL = "alacritty";
-    };
 
     systemd.network.networks."10-enp12s0" = {
       matchConfig.Name = "enp12s0";
@@ -51,35 +51,10 @@
       variant = "";
     };
 
-    hardware.bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-
-      settings = {
-        General = {
-          Enable = "Source,Sink,Media,Socket";
-        };
-      };
-    };
-
     # Optional: Bluetooth GUI manager
-    services.blueman.enable = true;
 
-    nixpkgs.overlays = [
-      (import ./overlays/osu-override.nix)
-    ];
-
-    services.printing.enable = false;
-
-    services.pulseaudio.enable = false;
     security.rtkit.enable = true;
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
-    };
+
     users.users.yonluc = {
       isNormalUser = true;
       description = "Yonluc";
@@ -89,10 +64,6 @@
         kdePackages.wacomtablet
       ];
     };
-
-    programs.firefox.enable = true;
-
-    nixpkgs.config.allowUnfree = true;
 
     services.xserver.videoDrivers = ["nvidia"];
 
@@ -121,15 +92,6 @@
       wantedBy = ["resume.target" "hybrid-sleep.target"];
     };
 
-    programs.steam = {
-      enable = true;
-      remotePlay.openFirewall = true;
-      dedicatedServer.openFirewall = true;
-      localNetworkGameTransfers.openFirewall = true;
-    };
-
-    nixpkgs.config.permittedInsecurePackages = ["beekeeper-studio-5.5.7" "ventoy-1.1.10"];
-
     swapDevices = [
       {
         device = "/var/lib/swapfile";
@@ -137,73 +99,7 @@
       }
     ];
 
-    #services.flatpak.enable = true;
-
-    environment.systemPackages = with pkgs; [
-      cypress
-      lsof
-      fastfetch
-      macchina
-      tcpdump
-      xdotool
-      wmctrl
-      opencode
-      steam
-      git
-      tree
-      jq
-      htop
-      curl
-      wget
-      fastfetch
-      gh
-      pavucontrol
-      chromium
-      btop
-      tmux
-      pnpm
-      beekeeper-studio
-      input-leap
-      bruno
-      caligula
-      ethtool
-      unzip
-      yt-dlp
-      devtoolbox
-      vlc
-      vscodium
-      wootility
-      wooting-udev-rules
-      podman-compose
-      podman-desktop
-      kubectl
-      nodejs_24
-      android-studio
-      pear-desktop
-      fuzzel
-      openssh
-      nmap
-      zsh
-      vim
-      code-cursor-fhs
-      alacritty
-      obs-studio
-      osu-lazer-bin
-      vesktop
-      wine
-      (callPackage ./nixpkgs/ankama.nix {})
-      bun
-      glibc
-      zig
-      p7zip
-      signal-desktop
-      go
-      winetricks
-    ];
-
     services.hardware.openrgb.enable = true;
-
-    hardware.wooting.enable = true;
 
     virtualisation = {
       containers.enable = true;
@@ -213,10 +109,6 @@
         defaultNetwork.settings.dns_enabled = true;
       };
     };
-
-    services.openssh.enable = true;
-
-    services.tailscale.enable = true;
 
     networking = {
       interfaces = {
