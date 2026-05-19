@@ -2,10 +2,11 @@
   flake.nixosModules.mainConfiguration = {pkgs, ...}: {
     imports = [
       self.nixosModules.mainHardware
+      self.nixosModules.cursor
       self.nixosModules.packagesDefault
       self.nixosModules.developmentDefault
       self.nixosModules.gamesDefault
-      self.nixosModules.socialDefault
+      self.nixosModules.settingsDefault
     ];
 
     boot.loader.systemd-boot.enable = true;
