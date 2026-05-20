@@ -6,6 +6,11 @@
     ...
   }: let
     cursorSettings = {
+      "files.watcherExclude" = {
+        "**/node_modules/**" = true;
+        "**/.git/**" = true;
+        "**/dist/**" = true;
+      };
       "window.commandCenter" = true;
       "workbench.sideBar.location" = "right";
       "todo-tree.highlights.customHighlight" = {

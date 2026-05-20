@@ -10,7 +10,11 @@
       self.nixosModules.niri
       self.nixosModules.packagesDefault
       self.nixosModules.cursor
+      self.nixosModules.moonlight
     ];
+
+    programs.moonlight.enable = true;
+
     zramSwap = {
       enable = true;
       memoryPercent = 50;
