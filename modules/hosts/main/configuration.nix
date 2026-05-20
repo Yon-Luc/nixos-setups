@@ -7,7 +7,6 @@
       self.nixosModules.packagesDefault
       self.nixosModules.developmentDefault
       self.nixosModules.gamesDefault
-      self.nixosModules.sunshine
     ];
 
     boot.loader.systemd-boot.enable = true;

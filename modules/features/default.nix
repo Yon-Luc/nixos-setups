@@ -31,6 +31,7 @@
       imports = [
         self.nixosModules.osu
         self.nixosModules.ankama
+        self.nixosModules.sunshine
       ];
 
       environment.systemPackages = with pkgs; [
@@ -51,6 +52,7 @@
         osu.enable = true;
         ankama.enable = true;
       };
+      programs.sunshine.enable = true;
     };
 
     developmentDefault = {pkgs, ...}: {
