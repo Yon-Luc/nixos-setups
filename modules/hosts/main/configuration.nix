@@ -7,6 +7,7 @@
       self.nixosModules.packagesDefault
       self.nixosModules.developmentDefault
       self.nixosModules.gamesDefault
+      self.nixosModules.sunshine
     ];
 
     boot.loader.systemd-boot.enable = true;
@@ -55,17 +56,19 @@
       nvidiaSettings = true;
     };
 
-    systemd.services.nvidia-suspend = {
-      enable = true;
-      wantedBy = ["suspend.target"];
-    };
-    systemd.services.nvidia-hibernate = {
-      enable = true;
-      wantedBy = ["hibernate.target"];
-    };
-    systemd.services.nvidia-resume = {
-      enable = true;
-      wantedBy = ["resume.target" "hybrid-sleep.target"];
+    systemd.services = {
+      nvidia-suspend = {
+        enable = true;
+        wantedBy = ["suspend.target"];
+      };
+      nvidia-hibernate = {
+        enable = true;
+        wantedBy = ["hibernate.target"];
+      };
+      nvidia-resume = {
+        enable = true;
+        wantedBy = ["resume.target" "hybrid-sleep.target"];
+      };
     };
 
     swapDevices = [
