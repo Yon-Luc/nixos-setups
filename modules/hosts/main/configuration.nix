@@ -80,7 +80,7 @@
     services.hardware.openrgb.enable = true;
 
     networking = {
-      hostName = "nixos";
+      hostName = "main";
       wireless.enable = true;
 
       interfaces = {

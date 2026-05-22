@@ -14,6 +14,12 @@
       powerOnBoot = true;
     };
 
+    environment.shellAliases = {
+      ns = "sudo nixos-rebuild switch --flake ~/nixos-setups#$(hostname)";
+      nt = "sudo nixos-rebuild test --flake ~/nixos-setups#$(hostname)";
+      nb = "sudo nixos-rebuild build --flake ~/nixos-setups#$(hostname)";
+    };
+
     services.blueman.enable = true;
 
     services.pipewire = {

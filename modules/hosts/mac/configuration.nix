@@ -32,7 +32,7 @@
 
     programs.niri.enable = true;
 
-    networking.hostName = "nixos-mac";
+    networking.hostName = "mac";
 
     networking.networkmanager.enable = true;
 
