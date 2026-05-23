@@ -32,7 +32,9 @@
         binds = {
           "Mod+Return".spawn-sh = lib.getExe pkgs.alacritty;
           "Mod+Q".close-window = null;
-          #"Mod+S".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call launcher toggle";
+          "Mod+S".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call launcher toggle";
+          "Mod+B".spawn-sh = lib.getExe pkgs.firefox;
+          "Mod+C".spawn-sh = lib.getExe pkgs.code-cursor-fhs;
         };
       };
     };
