@@ -19,11 +19,9 @@
     packages.myNiri = inputs.wrapper-modules.wrappers.niri.wrap {
       inherit pkgs;
       settings = {
-        /*
-          spawn-at-startup = [
+        spawn-at-startup = [
           (lib.getExe self'.packages.myNoctalia)
         ];
-        */
 
         outputs = {
           "DP-4" = {
