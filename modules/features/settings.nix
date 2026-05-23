@@ -1,5 +1,5 @@
 {...}: {
-  flake.nixosModules.settingsDefault = {...}: {
+  flake.nixosModules.settingsDefault = {pkgs, ...}: {
     nixpkgs.config.allowUnfree = true;
     environment.variables = {
       TERMINAL = "alacritty";
@@ -12,6 +12,25 @@
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
+    };
+
+    environment.systemPackages = with pkgs; [
+      wl-clipboard
+      grim
+      slurp
+      xdg-desktop-portal
+      xdg-desktop-portal-wlr
+    ];
+
+    xdg.portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr #
+      ];
+      config = {
+        common.default = "*";
+      };
     };
 
     environment.shellAliases = {
@@ -29,6 +48,11 @@
       pulse.enable = true;
       jack.enable = true;
     };
+
+    environment.sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+    };
+
     services.pulseaudio.enable = false;
 
     services.printing.enable = false;

@@ -19,6 +19,7 @@
         fastfetch
         pavucontrol
         vlc
+        mpc-qt
         signal-desktop
         vesktop
         chromium
