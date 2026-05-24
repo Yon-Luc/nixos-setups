@@ -13,16 +13,24 @@
         nmap
         tmux
         yt-dlp
-
         # apps
         alacritty
         fastfetch
         pavucontrol
         vlc
         mpc-qt
-        signal-desktop
+        (signal-desktop.overrideAttrs (old: {
+          installPhase =
+            (old.installPhase or "")
+            + ''
+              wrapProgram $out/bin/signal-desktop \
+                --add-flags "--password-store=kwallet6"
+            '';
+        }))
         vesktop
-        chromium
+        (chromium.override {
+          commandLineArgs = "--password-store=kwallet6";
+        })
         pear-desktop
         usbimager
       ];
