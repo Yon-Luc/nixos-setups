@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   flake.nixosModules.settingsDefault = {pkgs, ...}: {
     nixpkgs.config.allowUnfree = true;
 
@@ -39,6 +39,11 @@
     security.pam.services = {
       niri.enableGnomeKeyring = true;
       sddm.enableGnomeKeyring = true;
+    };
+
+    systemd.user.services.plasma-kscreenlocker = {
+      enable = false;
+      wantedBy = lib.mkForce [];
     };
 
     services = {
