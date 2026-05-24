@@ -54,6 +54,7 @@
     services.xserver.enable = true;
 
     services.displayManager.sddm.enable = true;
+    services.displayManager.defaultSession = "niri";
     services.desktopManager.plasma6.enable = true;
 
     services.xserver.xkb = {
@@ -63,7 +64,7 @@
 
     security.rtkit.enable = true;
 
-    users.users.yonmac = {
+    users.users.yonluc = {
       isNormalUser = true;
       description = "yonmac";
       extraGroups = ["networkmanager" "wheel"];

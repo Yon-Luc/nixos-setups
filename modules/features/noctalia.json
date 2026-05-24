@@ -219,7 +219,8 @@
       "clockFormat": "hh\\nmmHH:mm ",
       "passwordChars": true,
       "lockScreenMonitors": [
-        "DP-4"
+        "DP-4",
+        "eDP-1"
       ],
       "lockScreenBlur": 0,
       "lockScreenTint": 0,
@@ -703,6 +704,7 @@
     "openedPanel": "",
     "lockScreenActive": false,
     "wallpapers": {
+      "eDP-1": "/home/yonluc/nixos-setups/modules/wallpaper/shinobu.jpg",
       "DP-5": "/home/yonluc/nixos-setups/modules/wallpaper/shinobu.jpg",
       "DP-4": "/home/yonluc/nixos-setups/modules/wallpaper/monogatari-series-anime-girls-oshino-shinobu-wallpaper-cac5c4f0c2f8646d1f085d86c9563256.jpg"
     },
