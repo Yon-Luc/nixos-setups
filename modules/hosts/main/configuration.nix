@@ -25,14 +25,6 @@
     services.displayManager.defaultSession = "niri";
     services.displayManager.sddm.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      kdePackages.kwallet
-      kdePackages.kwallet-pam
-      kdePackages.kwalletmanager
-    ];
-
-    security.pam.services.sddm.kwallet.enable = true;
-
     services.xserver.xkb = {
       layout = "us";
       variant = "";

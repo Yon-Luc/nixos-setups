@@ -22,7 +22,12 @@
       slurp
       xdg-desktop-portal
       xdg-desktop-portal-gtk
+      kdePackages.kwallet
+      kdePackages.kwallet-pam
+      kdePackages.kwalletmanager
     ];
+
+    security.pam.services.sddm.kwallet.enable = true;
 
     xdg.portal = {
       enable = true;

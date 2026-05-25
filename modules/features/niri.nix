@@ -20,7 +20,6 @@
       settings = {
         spawn-at-startup = [
           (lib.getExe self'.packages.myNoctalia)
-          {command = ["sh" "-c" "sleep 1; ${lib.getExe self'.packages.myNoctalia} ipc call lockScreen lock"];}
         ];
         prefer-no-csd = true;
         outputs = {
