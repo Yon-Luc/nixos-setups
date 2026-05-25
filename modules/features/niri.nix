@@ -50,8 +50,8 @@
             "Mod+Ctrl+Shift+Right".move-window-to-monitor-right = {};
             "Mod+Ctrl+Left".focus-monitor-left = {};
             "Mod+Ctrl+Right".focus-monitor-right = {};
-            "Shift+Backslash".screenshot = {};
-            "Mod+Shift+Backslash".screenshot-screen = {};
+            "Ctrl+Backslash".screenshot = {};
+            "Mod+Ctrl+Backslash".screenshot-screen = {};
             "Ctrl+Shift+Backslash".screenshot-window = {};
             "Mod+F".fullscreen-window = {};
             "Mod+M".maximize-window-to-edges = {};

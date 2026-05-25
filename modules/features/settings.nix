@@ -1,4 +1,4 @@
-{lib, ...}: {
+{...}: {
   flake.nixosModules.settingsDefault = {pkgs, ...}: {
     nixpkgs.config.allowUnfree = true;
 
@@ -8,7 +8,6 @@
 
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";
-      PASSWORD_STORE = "gnome-libsecret";
     };
 
     environment.shellAliases = {
@@ -32,18 +31,6 @@
         xdg-desktop-portal-gtk
       ];
       config.common.default = "gtk";
-    };
-
-    services.gnome.gnome-keyring.enable = true;
-
-    security.pam.services = {
-      niri.enableGnomeKeyring = true;
-      sddm.enableGnomeKeyring = true;
-    };
-
-    systemd.user.services.plasma-kscreenlocker = {
-      enable = false;
-      wantedBy = lib.mkForce [];
     };
 
     services = {
