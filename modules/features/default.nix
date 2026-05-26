@@ -1,6 +1,9 @@
 {self, ...}: {
   flake.nixosModules = {
     packagesDefault = {pkgs, ...}: {
+      imports = [
+        self.nixosModules.kitty
+      ];
       environment.systemPackages = with pkgs; [
         # cli tools
         git
@@ -9,10 +12,12 @@
         tree
         jq
         curl
+        kdePackages.dolphin
         btop
         nmap
         tmux
         yt-dlp
+        yazi
         # apps
         alacritty
         fastfetch
