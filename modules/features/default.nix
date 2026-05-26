@@ -1,9 +1,6 @@
 {self, ...}: {
   flake.nixosModules = {
     packagesDefault = {pkgs, ...}: {
-      imports = [
-        self.nixosModules.kitty
-      ];
       environment.systemPackages = with pkgs; [
         # cli tools
         git
