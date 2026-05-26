@@ -1,6 +1,9 @@
 {self, ...}: {
   flake.nixosModules = {
     packagesDefault = {pkgs, ...}: {
+      imports = [
+        self.nixosModules.ghostty
+      ];
       environment.systemPackages = with pkgs; [
         # cli tools
         git
