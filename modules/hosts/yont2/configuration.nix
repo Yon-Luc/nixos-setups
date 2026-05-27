@@ -37,15 +37,15 @@
     hardware.enableRedistributableFirmware = true;
 
     hardware.firmware = [
-      (pkgs.stdenvNoCC.mkDerivation (final: {
-        name = "brcm-firmware";
-        src = ./brcm;
-        installPhase = ''
-          mkdir -p $out/lib/firmware/brcm
-          cp ${final.src}/* "$out/lib/firmware/brcm"
-        '';
-      }))
-    ];
+  (pkgs.stdenvNoCC.mkDerivation (final: {
+    name = "brcm-firmware";
+src = /etc/nixos/brcm;
+installPhase = ''
+      mkdir -p $out/lib/firmware/brcm
+      cp ${final.src}/* "$out/lib/firmware/brcm"
+    '';
+  }))
+];
 
     networking.hostName = "yont2";
     networking.networkmanager.enable = true;
@@ -59,7 +59,6 @@
       wayland.enable = true;
     };
     services.displayManager.defaultSession = "niri";
-    services.desktopManager.plasma6.enable = true;
 
     services.xserver.xkb = {
       layout = "us";
