@@ -6,7 +6,6 @@
     ...
   }: let
     ghosttySettings = {
-      theme = "catppuccin-mocha";
       font-family = "JetBrainsMono Nerd Font";
       font-size = 13;
 
@@ -17,6 +16,33 @@
       window-padding-y = 10;
 
       shell-integration = "fish";
+
+      # === mapped from Rose Pine Moon (Noctalia) ===
+      foreground = "#e0def4"; # mOnSurface
+      background = "#232136"; # mSurface
+
+      cursor-color = "#ea9a97"; # mPrimary
+      selection-background = "#393552"; # mSurfaceVariant
+
+      palette = [
+        "#232136" # black (surface)
+        "#eb6f92" # red (error)
+        "#9ccfd8" # green (secondary)
+        "#f6c177" # yellow (not provided → Rose Pine amber substitute)
+        "#3e8fb0" # blue (tertiary)
+        "#c4a7e7" # magenta (derived Rose Pine purple)
+        "#9ccfd8" # cyan (secondary reused)
+        "#e0def4" # white (onSurface)
+
+        "#44415a" # bright black (outline)
+        "#eb6f92" # bright red
+        "#9ccfd8" # bright green
+        "#f6c177" # bright yellow
+        "#3e8fb0" # bright blue
+        "#c4a7e7" # bright magenta
+        "#9ccfd8" # bright cyan
+        "#e0def4" # bright white
+      ];
     };
 
     toGhosttyConfig = attrs:

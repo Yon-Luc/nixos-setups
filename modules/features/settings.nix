@@ -3,7 +3,7 @@
     nixpkgs.config.allowUnfree = true;
 
     environment.variables = {
-      TERMINAL = "alacritty";
+      TERMINAL = "ghostty";
     };
 
     environment.sessionVariables = {
