@@ -3,6 +3,7 @@
     packagesDefault = {pkgs, ...}: {
       imports = [
         self.nixosModules.ghostty
+        self.nixosModules.zen
       ];
       environment.systemPackages = with pkgs; [
         # cli tools

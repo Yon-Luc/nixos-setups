@@ -53,8 +53,6 @@
       };
     };
 
-    programs.firefox.enable = true;
-
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;

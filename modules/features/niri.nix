@@ -65,7 +65,7 @@
             "Mod+Shift+K".move-window-up = {};
             "Mod+Shift+L".move-column-right = {};
             "Mod+S".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call launcher toggle";
-            "Mod+B".spawn-sh = lib.getExe pkgs.firefox;
+            "Mod+B".spawn-sh = lib.getExe self'.packages.zen-browser;
             "Mod+C".spawn-sh = lib.getExe pkgs.code-cursor-fhs;
           }
           // lib.mergeAttrsList (map (n: {
