@@ -8,6 +8,11 @@
     wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
