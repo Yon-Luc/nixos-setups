@@ -80,6 +80,7 @@
         xdotool
         wmctrl
         opencode
+        dig
         kubectl
         nodejs_24
         pnpm

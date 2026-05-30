@@ -36,7 +36,7 @@
         layout.gaps = 5;
         binds =
           {
-            "Mod+Return".spawn-sh = lib.getExe pkgs.alacritty;
+            "Mod+Return".spawn-sh = lib.getExe pkgs.ghostty;
             "Mod+Q".close-window = _: {};
             "Mod+Left".focus-column-left = {};
             "Mod+Down".focus-window-down = {};

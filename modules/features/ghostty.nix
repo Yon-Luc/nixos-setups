@@ -16,6 +16,7 @@
       window-padding-y = 10;
 
       shell-integration = "fish";
+      backspace-binding = "delete";
 
       # === mapped from Rose Pine Moon (Noctalia) ===
       foreground = "#e0def4"; # mOnSurface
@@ -47,7 +48,12 @@
 
     toGhosttyConfig = attrs:
       lib.concatStringsSep "\n"
-      (lib.mapAttrsToList (k: v: "${k} = ${toString v}") attrs);
+      (lib.concatMap
+        (k:
+          if builtins.isList attrs.${k}
+          then lib.imap0 (i: color: "${k} = ${toString i}=${color}") attrs.${k}
+          else ["${k} = ${toString attrs.${k}}"])
+        (builtins.attrNames attrs));
 
     settingsFile =
       pkgs.writeText "ghostty-config" (toGhosttyConfig ghosttySettings);
