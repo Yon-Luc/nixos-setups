@@ -15,6 +15,7 @@
         curl
         kdePackages.dolphin
         btop
+        bun
         nmap
         tmux
         yt-dlp
