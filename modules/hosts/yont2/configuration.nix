@@ -21,6 +21,8 @@
       self.nixosModules.nixRemoteBuilders
     ];
 
+    networking.hosts."main" = ["100.110.35.84"];
+
     programs.moonlight.enable = true;
 
     zramSwap = {
