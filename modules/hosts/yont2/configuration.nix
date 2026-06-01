@@ -1,4 +1,8 @@
-{self, inputs, ...}: {
+{
+  self,
+  inputs,
+  ...
+}: {
   flake.nixosModules.yont2Configuration = {
     config,
     pkgs,
@@ -38,15 +42,15 @@
     hardware.enableRedistributableFirmware = true;
 
     hardware.firmware = [
-  (pkgs.stdenvNoCC.mkDerivation (final: {
-    name = "brcm-firmware";
-src = /etc/nixos/brcm;
-installPhase = ''
-      mkdir -p $out/lib/firmware/brcm
-      cp ${final.src}/* "$out/lib/firmware/brcm"
-    '';
-  }))
-];
+      (pkgs.stdenvNoCC.mkDerivation (final: {
+        name = "brcm-firmware";
+        src = /etc/nixos/brcm;
+        installPhase = ''
+          mkdir -p $out/lib/firmware/brcm
+          cp ${final.src}/* "$out/lib/firmware/brcm"
+        '';
+      }))
+    ];
 
     networking.hostName = "yont2";
     networking.networkmanager.enable = true;
@@ -70,7 +74,7 @@ installPhase = ''
 
     security.rtkit.enable = true;
 
-    users.users.yont2 = {
+    users.users.yonluc = {
       isNormalUser = true;
       extraGroups = ["networkmanager" "wheel"];
       packages = with pkgs; [
