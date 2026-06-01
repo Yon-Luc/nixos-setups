@@ -8,6 +8,7 @@
       self.nixosModules.developmentDefault
       self.nixosModules.gamesDefault
       self.nixosModules.niri
+      self.nixosModules.nixBuilder
     ];
 
     boot.loader.systemd-boot.enable = true;

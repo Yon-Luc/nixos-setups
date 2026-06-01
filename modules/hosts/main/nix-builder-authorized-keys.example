@@ -1,0 +1,9 @@
+# yont2 builder pubkey is in modules/features/nix-builder.nix (safe to commit).
+#
+# On yont2, install the private key for nix (root reads it during builds):
+#
+#   sudo mkdir -p /etc/nix/ssh-keys
+#   sudo install -m600 -o root -g root ~/.ssh/nix-builder-main \
+#     /etc/nix/ssh-keys/nix-builder-main
+#
+# Rebuild both hosts after updating the flake.

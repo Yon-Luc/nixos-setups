@@ -1,0 +1,3 @@
+# Copy yont2's builder public key here, then rename:
+#   cp nix-builder-authorized-keys.example nix-builder-authorized-keys
+#   # paste one line: contents of ~/.ssh/nix-builder-main.pub on yont2

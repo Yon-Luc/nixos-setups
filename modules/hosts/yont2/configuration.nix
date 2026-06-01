@@ -14,6 +14,7 @@
       self.nixosModules.niri
       self.nixosModules.cursor
       self.nixosModules.moonlight
+      self.nixosModules.nixRemoteBuilders
     ];
 
     programs.moonlight.enable = true;
