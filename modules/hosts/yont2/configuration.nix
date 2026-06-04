@@ -12,6 +12,7 @@
       self.nixosModules.yont2Hardware
       self.nixosModules.yont2Substituter
       inputs.nixos-hardware.nixosModules.apple-t2
+      inputs.t2fanrd.nixosModules.t2fanrd
       self.nixosModules.settingsDefault
       self.nixosModules.packagesDefault
       self.nixosModules.developmentDefault
@@ -36,6 +37,25 @@
         size = 4096;
       }
     ];
+
+    # Two fans on APP0001:00; t2fanrd uses Fan1/Fan2 (not lm_sensors' fan1/fan2).
+    services.t2fanrd = {
+      enable = true;
+      config = {
+        Fan1 = {
+          low_temp = 48;
+          high_temp = 75;
+          speed_curve = "linear";
+          always_full_speed = false;
+        };
+        Fan2 = {
+          low_temp = 48;
+          high_temp = 75;
+          speed_curve = "linear";
+          always_full_speed = false;
+        };
+      };
+    };
 
     services.upower.enable = true;
 
