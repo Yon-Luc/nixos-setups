@@ -7,10 +7,10 @@
   }: {
     packages.maestro-studio = let
       pname = "maestro-studio";
-      version = "0.9.3"; # update as needed
+      version = "0.9.3";
       src = pkgs.fetchurl {
-        url = "https://github.com/mobile-dev-inc/maestro-studio/releases/download/v${version}/linux-Maestro-Studio-x86_64.AppImage ";
-        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # replace with real hash
+        url = "https://github.com/mobile-dev-inc/maestro-studio/releases/download/v${version}/linux-Maestro-Studio-x86_64.AppImage";
+        hash = "sha256-5UdVc0DQuy8FmmVfqr965+pyu4gRUKICoWuUFummE0k=";
       };
       appimageContents = pkgs.appimageTools.extract {inherit pname version src;};
       meta = {
@@ -31,18 +31,18 @@
               install -m 444 -D "$desktop_file" $out/share/applications/maestro-studio.desktop
               sed -i 's|^Exec=.*|Exec=maestro-studio --no-sandbox|' $out/share/applications/maestro-studio.desktop
             fi
-
             for size in 16 32 48 64 128 256 512; do
               icon="${appimageContents}/usr/share/icons/hicolor/''${size}x''${size}/apps/maestro-studio.png"
               if [ -f "$icon" ]; then
                 install -m 444 -D "$icon" $out/share/icons/hicolor/''${size}x''${size}/apps/maestro-studio.png
               fi
             done
-
-            # wrap to always pass --no-sandbox (required on Linux)
-            mv $out/bin/${pname} $out/bin/.${pname}-wrapped
-            makeWrapper $out/bin/.${pname}-wrapped $out/bin/${pname} \
-              --add-flags "--no-sandbox"
+            mv $out/bin/${pname} $out/bin/.${pname}-unwrapped
+            cat > $out/bin/${pname} <<EOF
+            #!/bin/sh
+            exec $out/bin/.${pname}-unwrapped --no-sandbox "\$@"
+            EOF
+            chmod +x $out/bin/${pname}
           '';
         };
   };

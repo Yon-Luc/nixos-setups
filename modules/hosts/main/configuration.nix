@@ -9,7 +9,10 @@
       self.nixosModules.gamesDefault
       self.nixosModules.niri
       self.nixosModules.nixBuilder
+      self.nixosModules.maestro-studio
     ];
+
+    programs.maestro-studio.enable = true;
 
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
