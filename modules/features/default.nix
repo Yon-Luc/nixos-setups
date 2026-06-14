@@ -84,6 +84,7 @@
         dig
         kubectl
         nodejs_24
+        maestro
         pnpm
         nmap
         vim
