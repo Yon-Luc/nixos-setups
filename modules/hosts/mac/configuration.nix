@@ -57,7 +57,7 @@
 
     services.xserver.xkb = {
       layout = "fr";
-      variant = "";
+      variant = "mac";
     };
 
     security.rtkit.enable = true;
