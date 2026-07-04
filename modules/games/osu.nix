@@ -11,16 +11,6 @@
       nativeWayland = false;
       src =
         {
-          aarch64-darwin = pkgs.fetchzip {
-            url = "https://github.com/ppy/osu/releases/download/${version}-lazer/osu.app.Apple.Silicon.zip";
-            hash = "sha256-Asqz0jiiHTtLcBzvibNzlaRe0jAop5YU4gmooZf/8gw=";
-            stripRoot = false;
-          };
-          x86_64-darwin = pkgs.fetchzip {
-            url = "https://github.com/ppy/osu/releases/download/${version}-lazer/osu.app.Intel.zip";
-            hash = "sha256-2ZAZ3CnYz/6VJxqpDNvx6jGcNV/9oo8Eb5/GkSidiv0=";
-            stripRoot = false;
-          };
           x86_64-linux = pkgs.fetchurl {
             url = "https://github.com/ppy/osu/releases/download/${version}-lazer/osu.AppImage";
             hash = "sha256-EKmCq656djPGK5I1JqSDcTKtpbQZbO8WGWcPv+PT0q4=";
@@ -79,7 +69,7 @@
       version = "4.24.0";
       src = pkgs.fetchzip {
         url = "https://github.com/tosuapp/tosu/releases/download/v${version}/tosu-linux-v${version}.zip";
-        hash = "sha256-EKTAhSjyYQCIL850G2Di5Lywwb8RGe3J3fOA6Q022KQ="; # replace with the hash `nix build` reports
+        hash = "sha256-EKTAhSjyYQCIL850G2Di5Lywwb8RGe3J3fOA6Q022KQ=";
         stripRoot = false;
       };
     in
@@ -87,7 +77,7 @@
         inherit pname version src;
         dontConfigure = true;
         dontBuild = true;
-        dontPatchELF = true; # critical: stdenv's default fixup phase would otherwise
+        dontPatchELF = true;
         dontStrip = true;
         installPhase = ''
           runHook preInstall
@@ -106,6 +96,59 @@
           platforms = ["x86_64-linux"];
         };
       };
+    packages.mania-map-analyser-app = let
+      width = 520;
+      height = 610;
+      url = "http://127.0.0.1:24050/ManiaMapAnalyser/";
+      tosuPort = 24050;
+    in
+      pkgs.writeShellApplication {
+        name = "mania-map-analyser-app";
+        runtimeInputs = [pkgs.chromium pkgs.xorg.xrandr pkgs.gawk pkgs.curl];
+        text = ''
+          # Start tosu if it isn't already running. `tosu` here resolves via
+          # PATH — on NixOS, /run/wrappers/bin (which holds the CAP_SYS_PTRACE
+          # wrapped copy) comes first, so this picks up the capable one.
+          if ! pgrep -x tosu > /dev/null; then
+            setsid -f tosu > /dev/null 2>&1 &
+          fi
+
+          # Wait for tosu's web server to actually be up before opening the window
+          for _ in $(seq 1 50); do
+            if curl -s -o /dev/null "http://127.0.0.1:${toString tosuPort}/"; then
+              break
+            fi
+            sleep 0.2
+          done
+
+          PROFILE_DIR="$HOME/.local/share/mania-map-analyser-app"
+          mkdir -p "$PROFILE_DIR"
+
+          read -r SCREEN_W SCREEN_H < <(xrandr --current | awk '/\*/{print $1; exit}' | tr 'x' ' ')
+          SCREEN_W=''${SCREEN_W:-1920}
+          SCREEN_H=''${SCREEN_H:-1080}
+
+          POS_X=$(( (SCREEN_W - ${toString width}) / 2 ))
+          POS_Y=$(( (SCREEN_H - ${toString height}) / 2 ))
+
+          exec chromium \
+            --app="${url}" \
+            --window-size=${toString width},${toString height} \
+            --window-position="$POS_X,$POS_Y" \
+            --user-data-dir="$PROFILE_DIR" \
+            --no-first-run \
+            --disable-session-crashed-bubble \
+            --disable-infobars
+        '';
+      };
+
+    packages.mania-map-analyser-app-desktop = pkgs.makeDesktopItem {
+      name = "mania-map-analyser-app";
+      desktopName = "Mania Map Analyser Overlay";
+      exec = "${self.packages.${system}.mania-map-analyser-app}/bin/mania-map-analyser-app";
+      icon = "chromium";
+      categories = ["Game"];
+    };
     packages.osumania-map-analyser = let
       pname = "osumania-map-analyser";
       version = "1.3.2";
@@ -140,7 +183,7 @@
         meta = {
           description = "Real-time osu!mania difficulty/pattern-analysis overlay plugin for tosu";
           homepage = "https://github.com/LeoBlackMT/osumania_map_analyser";
-          platforms = lib.platforms.all; # pure static assets, no arch dependency
+          platforms = lib.platforms.all;
         };
       };
   };
@@ -224,5 +267,21 @@
         ];
       }
     );
+  };
+  flake.nixosModules.maniaMapAnalyserApp = {
+    pkgs,
+    lib,
+    config,
+    ...
+  }: {
+    options.programs.maniaMapAnalyserApp = {
+      enable = lib.mkEnableOption "the tosu ManiaMapAnalyser overlay as a borderless app window";
+    };
+    config = lib.mkIf config.programs.maniaMapAnalyserApp.enable {
+      environment.systemPackages = [
+        self.packages.${pkgs.stdenv.hostPlatform.system}.mania-map-analyser-app
+        self.packages.${pkgs.stdenv.hostPlatform.system}.mania-map-analyser-app-desktop
+      ];
+    };
   };
 }

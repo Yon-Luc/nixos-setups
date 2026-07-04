@@ -53,6 +53,7 @@
         self.nixosModules.ankama
         self.nixosModules.sunshine
         self.nixosModules.osumania-map-analyser
+        self.nixosModules.maniaMapAnalyserApp
       ];
 
       environment.systemPackages = with pkgs; [
@@ -78,6 +79,7 @@
           enable = true;
           user = "yonluc";
         };
+        maniaMapAnalyserApp.enable = true;
       };
       programs.sunshine.enable = true;
     };

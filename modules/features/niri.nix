@@ -59,6 +59,7 @@
             "Mod+Shift+Left".move-column-left = {};
             "Mod+Shift+Down".move-window-down = {};
             "Mod+Shift+Up".move-window-up = {};
+            "Mod+V".toggle-window-floating = {};
             "Mod+Shift+Right".move-column-right = {};
             "Mod+Shift+H".move-column-left = {};
             "Mod+Shift+J".move-window-down = {};
