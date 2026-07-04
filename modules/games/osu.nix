@@ -101,41 +101,61 @@
       height = 610;
       url = "http://127.0.0.1:24050/ManiaMapAnalyser/";
       tosuPort = 24050;
+      appId = "mania-map-analyser-app";
+
+      transparencyExt = pkgs.stdenvNoCC.mkDerivation {
+        pname = "mania-map-analyser-transparency-ext";
+        version = "1";
+        dontUnpack = true;
+        installPhase = ''
+          mkdir -p $out
+          cat > $out/manifest.json <<EOF
+          {
+            "manifest_version": 3,
+            "name": "Force transparent background",
+            "version": "1.0",
+            "content_scripts": [
+              {
+                "matches": ["http://127.0.0.1:${toString tosuPort}/*"],
+                "css": ["style.css"],
+                "run_at": "document_start"
+              }
+            ]
+          }
+          EOF
+          cat > $out/style.css <<'EOF'
+          html, body {
+            background: transparent !important;
+            background-color: transparent !important;
+          }
+          EOF
+        '';
+      };
     in
       pkgs.writeShellApplication {
         name = "mania-map-analyser-app";
-        runtimeInputs = [pkgs.chromium pkgs.xorg.xrandr pkgs.gawk pkgs.curl];
+        runtimeInputs = [pkgs.chromium pkgs.curl];
         text = ''
-          # Start tosu if it isn't already running. `tosu` here resolves via
-          # PATH — on NixOS, /run/wrappers/bin (which holds the CAP_SYS_PTRACE
-          # wrapped copy) comes first, so this picks up the capable one.
           if ! pgrep -x tosu > /dev/null; then
             setsid -f tosu > /dev/null 2>&1 &
           fi
-
-          # Wait for tosu's web server to actually be up before opening the window
           for _ in $(seq 1 50); do
             if curl -s -o /dev/null "http://127.0.0.1:${toString tosuPort}/"; then
               break
             fi
             sleep 0.2
           done
-
           PROFILE_DIR="$HOME/.local/share/mania-map-analyser-app"
           mkdir -p "$PROFILE_DIR"
-
-          read -r SCREEN_W SCREEN_H < <(xrandr --current | awk '/\*/{print $1; exit}' | tr 'x' ' ')
-          SCREEN_W=''${SCREEN_W:-1920}
-          SCREEN_H=''${SCREEN_H:-1080}
-
-          POS_X=$(( (SCREEN_W - ${toString width}) / 2 ))
-          POS_Y=$(( (SCREEN_H - ${toString height}) / 2 ))
-
           exec chromium \
             --app="${url}" \
+            --class=${appId} \
             --window-size=${toString width},${toString height} \
-            --window-position="$POS_X,$POS_Y" \
             --user-data-dir="$PROFILE_DIR" \
+            --load-extension=${transparencyExt} \
+            --ozone-platform=x11 \
+            --enable-transparent-visuals \
+            --disable-gpu-compositing \
             --no-first-run \
             --disable-session-crashed-bubble \
             --disable-infobars
@@ -159,31 +179,48 @@
     in
       pkgs.stdenvNoCC.mkDerivation {
         inherit pname version src;
+
         nativeBuildInputs = [pkgs.p7zip];
+
         dontConfigure = true;
         dontBuild = true;
+
         unpackPhase = ''
           mkdir extracted
-          7z x $src -oextracted
+          7z x "$src" -oextracted
         '';
+
+        postUnpack = ''
+          substituteInPlace extracted/styles/base.css \
+            --replace-fail \
+            'background: transparent;' \
+            'background: var(--glass) !important;'
+        '';
+
         installPhase = ''
           runHook preInstall
-          mkdir -p $out
-          # if the archive has a single top-level directory, flatten it;
-          # otherwise copy everything as-is. tosu wants the plugin folder
-          # itself directly under static/, not double-nested.
+
+          substituteInPlace extracted/styles/base.css \
+            --replace-fail \
+            'background: transparent;' \
+            'background: var(--glass) !important;'
+
+          mkdir -p "$out"
+
           entries=(extracted/*)
           if [ "''${#entries[@]}" -eq 1 ] && [ -d "''${entries[0]}" ]; then
-            cp -r "''${entries[0]}"/. $out/
+            cp -r "''${entries[0]}"/. "$out/"
           else
-            cp -r extracted/. $out/
+            cp -r extracted/. "$out/"
           fi
+
           runHook postInstall
         '';
-        meta = {
+
+        meta = with lib; {
           description = "Real-time osu!mania difficulty/pattern-analysis overlay plugin for tosu";
           homepage = "https://github.com/LeoBlackMT/osumania_map_analyser";
-          platforms = lib.platforms.all;
+          platforms = platforms.all;
         };
       };
   };

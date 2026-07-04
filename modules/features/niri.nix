@@ -26,7 +26,6 @@
           "DP-4" = {
             mode = "1920x1080@144.001";
           };
-
           "DP-5" = {
             transform = "270";
           };
@@ -34,6 +33,20 @@
         xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
         input.keyboard.xkb.layout = "us,ua";
         layout.gaps = 5;
+
+        window-rules = [
+          {
+            matches = [{app-id = "^mania-map-analyser-app$";}];
+            open-floating = true;
+            default-column-width.fixed = 520;
+            default-window-height.fixed = 610;
+            min-width = 520;
+            max-width = 520;
+            min-height = 610;
+            max-height = 610;
+          }
+        ];
+
         binds =
           {
             "Mod+Return".spawn-sh = lib.getExe pkgs.ghostty;
