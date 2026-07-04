@@ -28,6 +28,7 @@
 
     services.displayManager.defaultSession = "niri";
     services.displayManager.sddm.enable = true;
+    services.desktopManager.plasma6.enable = true;
 
     services.xserver.xkb = {
       layout = "us";
@@ -39,11 +40,13 @@
     users.users.yonluc = {
       isNormalUser = true;
       description = "Yonluc";
-      extraGroups = ["networkmanager" "wheel" "podman" "input"];
+      extraGroups = ["networkmanager" "wheel" "podman" "input" "openrazer"];
       packages = with pkgs; [
         kdePackages.kate
       ];
     };
+
+    programs.firefox.enable = true;
 
     services.xserver.videoDrivers = ["nvidia"];
 

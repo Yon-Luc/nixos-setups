@@ -44,19 +44,25 @@
     };
 
     gamesDefault = {pkgs, ...}: {
+      hardware.wooting.enable = true;
+      hardware.openrazer.enable = true;
+
       imports = [
         self.nixosModules.osu
+        self.nixosModules.tosu
         self.nixosModules.ankama
         self.nixosModules.sunshine
+        self.nixosModules.osumania-map-analyser
       ];
 
       environment.systemPackages = with pkgs; [
+        bottles
         obs-studio
         wooting-udev-rules
         wootility
+        openrazer-daemon
+        polychromatic
       ];
-
-      hardware.wooting.enable = true;
 
       programs = {
         steam = {
@@ -66,7 +72,12 @@
           localNetworkGameTransfers.openFirewall = true;
         };
         osu.enable = true;
+        tosu.enable = true;
         ankama.enable = true;
+        tosuPlugins.maniaMapAnalyser = {
+          enable = true;
+          user = "yonluc";
+        };
       };
       programs.sunshine.enable = true;
     };
@@ -76,7 +87,8 @@
         # gui
         podman-desktop
         beekeeper-studio
-
+        vscode-fhs
+        cloudflared
         # cli / devtools
         xdotool
         wmctrl

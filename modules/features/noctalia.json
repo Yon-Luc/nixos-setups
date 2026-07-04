@@ -218,35 +218,17 @@
       "clockStyle": "analog",
       "clockFormat": "hh\\nmmHH:mm ",
       "passwordChars": true,
-      "lockScreenMonitors": [
-        "DP-4",
-        "eDP-1"
-      ],
+      "lockScreenMonitors": ["DP-4", "eDP-1"],
       "lockScreenBlur": 0,
       "lockScreenTint": 0,
       "keybinds": {
-        "keyUp": [
-          "Up"
-        ],
-        "keyDown": [
-          "Down"
-        ],
-        "keyLeft": [
-          "Left"
-        ],
-        "keyRight": [
-          "Right"
-        ],
-        "keyEnter": [
-          "Return",
-          "Enter"
-        ],
-        "keyEscape": [
-          "Esc"
-        ],
-        "keyRemove": [
-          "Del"
-        ]
+        "keyUp": ["Up"],
+        "keyDown": ["Down"],
+        "keyLeft": ["Left"],
+        "keyRight": ["Right"],
+        "keyEnter": ["Return", "Enter"],
+        "keyEscape": ["Esc"],
+        "keyRemove": ["Del"]
       },
       "reverseScroll": false,
       "smoothScrollEnabled": true
@@ -300,7 +282,7 @@
     "wallpaper": {
       "enabled": true,
       "overviewEnabled": false,
-      "directory": "/home/yonluc/Pictures/Wallpapers",
+      "directory": "/home/yonluc/nixos-setups/modules/wallpaper",
       "monitorDirectories": [],
       "enableMultiMonitorDirectories": false,
       "showHiddenFiles": false,
@@ -606,11 +588,7 @@
       "autoHideMs": 2000,
       "overlayLayer": true,
       "backgroundOpacity": 1,
-      "enabledTypes": [
-        0,
-        1,
-        2
-      ],
+      "enabledTypes": [0, 1, 2],
       "monitors": []
     },
     "audio": {
@@ -704,7 +682,7 @@
     "openedPanel": "",
     "lockScreenActive": false,
     "wallpapers": {
-      "eDP-1": "/home/yonluc/nixos-setups/modules/wallpaper/shinobu.jpg",
+      "eDP-1": "/home/yonluc/nixos-setups/modules/wallpaper/aisha.webp",
       "DP-5": "/home/yonluc/nixos-setups/modules/wallpaper/shinobu.jpg",
       "DP-4": "/home/yonluc/nixos-setups/modules/wallpaper/monogatari-series-anime-girls-oshino-shinobu-wallpaper-cac5c4f0c2f8646d1f085d86c9563256.jpg"
     },
