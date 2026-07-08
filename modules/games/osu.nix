@@ -134,20 +134,49 @@
     in
       pkgs.writeShellApplication {
         name = "mania-map-analyser-app";
-        runtimeInputs = [pkgs.chromium pkgs.curl];
+        runtimeInputs = [pkgs.chromium pkgs.curl pkgs.procps pkgs.util-linux];
         text = ''
-          if ! pgrep -x tosu > /dev/null; then
+          LOCK_FILE="/tmp/mania-map-analyser-tosu.lock"
+          STARTED_TOSU=0
+          TOSU_PID=""
+
+          is_tosu_up() {
+            curl -s -o /dev/null "http://127.0.0.1:${toString tosuPort}/"
+          }
+
+          exec 9>"$LOCK_FILE"
+          flock 9
+
+          if ! is_tosu_up; then
             setsid -f tosu > /dev/null 2>&1 &
+            STARTED_TOSU=1
+            for _ in $(seq 1 25); do
+              TOSU_PID=$(pgrep -n -x tosu || true)
+              [ -n "$TOSU_PID" ] && break
+              sleep 0.1
+            done
           fi
+
+          flock -u 9
+
+          cleanup() {
+            if [ "$STARTED_TOSU" -eq 1 ] && [ -n "$TOSU_PID" ]; then
+              kill "$TOSU_PID" 2>/dev/null || true
+            fi
+          }
+          trap cleanup EXIT
+
           for _ in $(seq 1 50); do
-            if curl -s -o /dev/null "http://127.0.0.1:${toString tosuPort}/"; then
+            if is_tosu_up; then
               break
             fi
             sleep 0.2
           done
+
           PROFILE_DIR="$HOME/.local/share/mania-map-analyser-app"
           mkdir -p "$PROFILE_DIR"
-          exec chromium \
+
+          chromium \
             --app="${url}" \
             --class=${appId} \
             --window-size=${toString width},${toString height} \
@@ -188,13 +217,6 @@
         unpackPhase = ''
           mkdir extracted
           7z x "$src" -oextracted
-        '';
-
-        postUnpack = ''
-          substituteInPlace extracted/styles/base.css \
-            --replace-fail \
-            'background: transparent;' \
-            'background: var(--glass) !important;'
         '';
 
         installPhase = ''

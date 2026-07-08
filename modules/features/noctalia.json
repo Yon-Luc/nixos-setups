@@ -593,7 +593,7 @@
     },
     "audio": {
       "volumeStep": 5,
-      "volumeOverdrive": false,
+      "volumeOverdrive": true,
       "spectrumFrameRate": 30,
       "visualizerType": "linear",
       "spectrumMirrored": true,

@@ -106,6 +106,7 @@
         podman-compose
         runc
         conmon
+        openssl
       ];
 
       nixpkgs.config.permittedInsecurePackages = [
