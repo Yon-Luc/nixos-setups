@@ -65,6 +65,11 @@
         polychromatic
       ];
 
+      hardware.opentabletdriver.enable = true;
+
+      hardware.uinput.enable = true;
+      boot.kernelModules = ["uinput"];
+
       programs = {
         steam = {
           enable = true;
@@ -75,6 +80,7 @@
         osu.enable = true;
         tosu.enable = true;
         ankama.enable = true;
+        interlude.enable = true;
         tosuPlugins.maniaMapAnalyser = {
           enable = true;
           user = "yonluc";

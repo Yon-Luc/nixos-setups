@@ -7,13 +7,13 @@
   }: {
     packages.osu = let
       pname = "osu-lazer-bin";
-      version = "2026.624.0";
+      version = "2026.711.0";
       nativeWayland = false;
       src =
         {
           x86_64-linux = pkgs.fetchurl {
             url = "https://github.com/ppy/osu/releases/download/${version}-lazer/osu.AppImage";
-            hash = "sha256-EKmCq656djPGK5I1JqSDcTKtpbQZbO8WGWcPv+PT0q4=";
+            hash = "sha256-KyA5UCvb9epk7jRtdG5wl0LzKc6/D2rkw5EJQxIaihw=";
           };
         }.${
           system
@@ -66,10 +66,10 @@
         };
     packages.tosu = let
       pname = "tosu";
-      version = "4.24.0";
+      version = "4.25.0";
       src = pkgs.fetchzip {
         url = "https://github.com/tosuapp/tosu/releases/download/v${version}/tosu-linux-v${version}.zip";
-        hash = "sha256-EKTAhSjyYQCIL850G2Di5Lywwb8RGe3J3fOA6Q022KQ=";
+        hash = "sha256-EKTAhSjyYQCIL850G2Di5Lywwb8RGe3J3fOA6Q032KQ=";
         stripRoot = false;
       };
     in
