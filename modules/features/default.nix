@@ -54,6 +54,7 @@
         self.nixosModules.sunshine
         self.nixosModules.osumania-map-analyser
         self.nixosModules.maniaMapAnalyserApp
+        self.nixosModules.interlude
       ];
 
       environment.systemPackages = with pkgs; [
@@ -80,12 +81,12 @@
         osu.enable = true;
         tosu.enable = true;
         ankama.enable = true;
-        interlude.enable = true;
         tosuPlugins.maniaMapAnalyser = {
           enable = true;
           user = "yonluc";
         };
         maniaMapAnalyserApp.enable = true;
+        interlude.enable = true;
       };
       programs.sunshine.enable = true;
     };

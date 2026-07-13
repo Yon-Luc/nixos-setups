@@ -69,7 +69,7 @@
       version = "4.25.0";
       src = pkgs.fetchzip {
         url = "https://github.com/tosuapp/tosu/releases/download/v${version}/tosu-linux-v${version}.zip";
-        hash = "sha256-EKTAhSjyYQCIL850G2Di5Lywwb8RGe3J3fOA6Q032KQ=";
+        hash = "sha256-V4isv55jyue9pygy9CXMH6IrbS2ht6LyFfo4HyRZEYE=";
         stripRoot = false;
       };
     in
