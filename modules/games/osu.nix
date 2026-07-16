@@ -66,10 +66,10 @@
         };
     packages.tosu = let
       pname = "tosu";
-      version = "4.25.0";
+      version = "4.25.1";
       src = pkgs.fetchzip {
         url = "https://github.com/tosuapp/tosu/releases/download/v${version}/tosu-linux-v${version}.zip";
-        hash = "sha256-V4isv55jyue9pygy9CXMH6IrbS2ht6LyFfo4HyRZEYE=";
+        hash = "sha256-rYBhM7/nPyWKKtGeCP2neBFDcMofo0gqkun/FxR+O48=";
         stripRoot = false;
       };
     in
