@@ -115,6 +115,7 @@
         conmon
         openssl
       ];
+      programs.direnv.enable = true;
 
       nixpkgs.config.permittedInsecurePackages = [
         "beekeeper-studio-5.6.5"
