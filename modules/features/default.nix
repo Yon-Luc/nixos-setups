@@ -7,6 +7,7 @@
       ];
       environment.systemPackages = with pkgs; [
         # cli tools
+        easyeffects
         git
         gh
         vim
