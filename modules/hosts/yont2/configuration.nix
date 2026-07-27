@@ -5,6 +5,7 @@
 }: {
   flake.nixosModules.yont2Configuration = {
     config,
+    lib,
     pkgs,
     ...
   }: {
@@ -38,6 +39,12 @@
       }
     ];
 
+    environment.systemPackages = [
+      pkgs.mgba
+      pkgs.vscodium-fhs
+      pkgs.vscode-fhs
+    ];
+
     # Two fans on APP0001:00; t2fanrd uses Fan1/Fan2 (not lm_sensors' fan1/fan2).
     services.t2fanrd = {
       enable = true;
@@ -62,6 +69,14 @@
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
     boot.loader.efi.efiSysMountPoint = "/boot";
+
+    # nixos-hardware apple-t2 "latest" still pins EOL linux_7_0; use 7.1 + t2linux 7.1 patches.
+    boot.kernelPackages = lib.mkForce (pkgs.linuxPackagesFor (
+      pkgs.callPackage "${inputs.nixos-hardware}/apple/t2/pkgs/linux-t2/generic.nix" {
+        kernel = pkgs.linux_7_1;
+        patchesFile = ./linux-t2-7.1.json;
+      }
+    ));
 
     hardware.enableRedistributableFirmware = true;
 
