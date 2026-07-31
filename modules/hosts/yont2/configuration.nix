@@ -78,6 +78,9 @@
       }
     ));
 
+    # MacBookPro15,1: force Intel iGPU so AMD dGPU doesn't break suspend/resume.
+    hardware.apple-t2.enableIGPU = true;
+
     hardware.enableRedistributableFirmware = true;
 
     hardware.firmware = [
