@@ -72,7 +72,7 @@
 
     # nixos-hardware apple-t2 "latest" still pins EOL linux_7_0; use 7.1 + t2linux 7.1 patches.
     boot.kernelPackages = lib.mkForce (pkgs.linuxPackagesFor (
-      pkgs.callPackage "${inputs.nixos-hardware}/apple/t2/pkgs/linux-t2/generic.nix" {
+      pkgs.callPackage "${inputs.nixos-hardware}/apple/t2/pkgs/linux-t2/generic.nix" {} {
         kernel = pkgs.linux_7_1;
         patchesFile = ./linux-t2-7.1.json;
       }
