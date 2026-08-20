@@ -24,6 +24,8 @@
       linkConfig.AutoNegotiation = false;
     };
 
+    boot.kernelParams = ["amdgpu.audio=1"];
+
     services.xserver.enable = true;
 
     services.displayManager.defaultSession = "niri";

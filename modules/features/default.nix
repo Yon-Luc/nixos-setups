@@ -4,7 +4,10 @@
       imports = [
         self.nixosModules.ghostty
         self.nixosModules.zen
+        self.nixosModules.bun
       ];
+      programs.bun.enable = true;
+
       environment.systemPackages = with pkgs; [
         # cli tools
         easyeffects
@@ -16,7 +19,7 @@
         curl
         kdePackages.dolphin
         btop
-        bun
+        mpv
         nmap
         tmux
         yt-dlp
@@ -65,6 +68,7 @@
         wootility
         openrazer-daemon
         polychromatic
+        parsec-bin
       ];
 
       hardware.opentabletdriver.enable = true;
@@ -97,6 +101,7 @@
         # gui
         podman-desktop
         beekeeper-studio
+        cursor-cli
         vscode-fhs
         cloudflared
         # cli / devtools
