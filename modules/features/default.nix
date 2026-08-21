@@ -5,8 +5,10 @@
         self.nixosModules.ghostty
         self.nixosModules.zen
         self.nixosModules.bun
+        self.nixosModules.opencode2
       ];
       programs.bun.enable = true;
+      programs.opencode2.enable = true;
 
       environment.systemPackages = with pkgs; [
         # cli tools
