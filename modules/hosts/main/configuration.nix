@@ -42,12 +42,33 @@
     users.users.yonluc = {
       isNormalUser = true;
       description = "Yonluc";
-      extraGroups = ["networkmanager" "wheel" "podman" "input" "openrazer"];
+
+      subUidRanges = [
+        {
+          startUid = 100000;
+          count = 65536;
+        }
+      ];
+
+      subGidRanges = [
+        {
+          startGid = 100000;
+          count = 65536;
+        }
+      ];
+
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "podman"
+        "input"
+        "openrazer"
+      ];
+
       packages = with pkgs; [
         kdePackages.kate
       ];
     };
-
     programs.firefox.enable = true;
 
     services.xserver.videoDrivers = ["nvidia"];

@@ -7,10 +7,10 @@
   }: {
     packages.ankama = let
       pname = "ankama-launcher";
-      version = "3.14.46";
+      version = "3.14.47";
       src = pkgs.fetchurl {
         url = "https://launcher.cdn.ankama.com/installers/production/Ankama%20Launcher-Setup-x86_64.AppImage";
-        hash = "sha256-QtDgAYEIVMPLslxnP2yMFZKazDAWCDGMNH/HrXVc9Zo=";
+        hash = "sha256-0JJCTEpiGABy8yetwdZpGdxR0vwLBFY9ktdDp9fNKr4=";
       };
       appimageContents = pkgs.appimageTools.extract {inherit pname version src;};
       meta = {
