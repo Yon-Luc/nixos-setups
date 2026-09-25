@@ -41,6 +41,7 @@
             '';
         }))
         vesktop
+        stoat-desktop
         (chromium.override {
           commandLineArgs = "--password-store=kwallet6";
         })
