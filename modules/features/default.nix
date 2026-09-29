@@ -127,7 +127,7 @@
       programs.direnv.enable = true;
 
       nixpkgs.config.permittedInsecurePackages = [
-        "beekeeper-studio-5.6.5"
+        "beekeeper-studio-6.1.1"
       ];
 
       virtualisation = {
