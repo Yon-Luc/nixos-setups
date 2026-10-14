@@ -7,13 +7,13 @@
   }: {
     packages.osu = let
       pname = "osu-lazer-bin";
-      version = "2026.921.0";
+      version = "2026.1005.0";
       nativeWayland = false;
       src =
         {
           x86_64-linux = pkgs.fetchurl {
             url = "https://github.com/ppy/osu/releases/download/${version}-lazer/osu.AppImage";
-            hash = "sha256-3O2UY7UBAJyV2+2JGr0vCswu+4TuQzb1scw7fASl/H0=";
+            hash = "sha256:284108e65373a8339beeca40e2c14b1528c177bd6ce1eb21407639f8e508da2e";
           };
         }.${
           system

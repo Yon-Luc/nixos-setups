@@ -57,6 +57,7 @@
       imports = [
         self.nixosModules.osu
         self.nixosModules.tosu
+        self.nixosModules.hashi
         self.nixosModules.ankama
         self.nixosModules.sunshine
         self.nixosModules.osumania-map-analyser
@@ -88,6 +89,7 @@
         };
         osu.enable = true;
         tosu.enable = true;
+        hashi.enable = true;
         ankama.enable = true;
         tosuPlugins.maniaMapAnalyser = {
           enable = true;
