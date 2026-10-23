@@ -59,6 +59,7 @@
         self.nixosModules.tosu
         self.nixosModules.hashi
         self.nixosModules.ankama
+        self.nixosModules.backbeat
         self.nixosModules.sunshine
         self.nixosModules.osumania-map-analyser
         self.nixosModules.maniaMapAnalyserApp
@@ -91,6 +92,7 @@
         tosu.enable = true;
         hashi.enable = true;
         ankama.enable = true;
+        backbeat.enable = true;
         tosuPlugins.maniaMapAnalyser = {
           enable = true;
           user = "yonluc";

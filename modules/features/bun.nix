@@ -6,12 +6,12 @@
     ...
   }: {
     packages.bun = let
-      version = "1.4.2";
+      version = "1.4.4";
 
       sources = {
         x86_64-linux = {
           url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-linux-x64.zip";
-          hash = "sha256-Nq85/hrOkT7M4VJ9Uc7Kr9e+uNx8unD4d30RzaQlYxc="; # replace with real hash
+          hash = "sha256-SQxqWbkwuEx42tLBeD8BdpDH1bxUasS1yOkkDULCz3U="; # replace with real hash
         };
         aarch64-linux = {
           url = "https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-linux-aarch64.zip";

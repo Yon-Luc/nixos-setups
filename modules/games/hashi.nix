@@ -7,10 +7,10 @@
   }: {
     packages.hashi = let
       pname = "hashi";
-      version = "0.1.3";
+      version = "0.1.4";
       src = pkgs.fetchurl {
         url = "https://github.com/aleju03/hashi/releases/download/v${version}/Hashi_${version}_amd64.AppImage";
-        hash = "sha256-CPg4WAbp/HdUyvcQBA1EXK/QG9le8tLTla5FNTEXOTo=";
+        hash = "sha256-rVYHu6+7JHpk6/pYNolDTD2SiTJIJrKJS0YGJjTtwwQ=";
       };
       appimageContents = pkgs.appimageTools.extract {inherit pname version src;};
 
