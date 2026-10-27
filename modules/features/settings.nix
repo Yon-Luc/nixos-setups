@@ -2,22 +2,6 @@
   flake.nixosModules.settingsDefault = {pkgs, ...}: {
     nixpkgs.config.allowUnfree = true;
 
-    # KWin 6.7.6 is not in nixpkgs yet (scheduled 2026-11-03). This is the
-    # Plasma/6.7 backport of the Wine/Xwayland focus fix:
-    # https://invent.kde.org/plasma/kwin/-/commit/ef6fa8354d428dcaf8a92841f77fd96cccfa2c11
-    # BUG: https://bugs.kde.org/show_bug.cgi?id=525590
-    nixpkgs.overlays = [
-      (final: prev: {
-        kdePackages = prev.kdePackages.overrideScope (kdeFinal: kdePrev: {
-          kwin = kdePrev.kwin.overrideAttrs (old: {
-            patches = (old.patches or []) ++ [
-              ./kwin-525590.patch
-            ];
-          });
-        });
-      })
-    ];
-
     environment.variables = {
       TERMINAL = "ghostty";
     };
@@ -28,6 +12,7 @@
 
     environment.shellAliases = {
       ns = "sudo nixos-rebuild switch --flake ~/nixos-setups#$(hostname)";
+      nbo = "sudo nixos-rebuild boot --flake ~/nixos-setups#$(hostname)";
       nt = "sudo nixos-rebuild test --flake ~/nixos-setups#$(hostname)";
       nb = "sudo nixos-rebuild build --flake ~/nixos-setups#$(hostname)";
     };

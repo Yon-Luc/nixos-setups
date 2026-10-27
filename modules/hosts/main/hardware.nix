@@ -10,9 +10,7 @@
     ];
 
     boot.initrd.availableKernelModules = ["nvme" "ahci" "xhci_pci" "usb_storage" "usbhid" "sd_mod"];
-    boot.initrd.kernelModules = ["8821cu"];
     boot.kernelModules = ["kvm-amd"];
-    boot.extraModulePackages = [config.boot.kernelPackages.rtl8821cu];
 
     fileSystems."/" = {
       device = "/dev/disk/by-uuid/daa89d87-afcb-49e1-9865-5c81d8d999e9";

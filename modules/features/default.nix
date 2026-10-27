@@ -52,7 +52,7 @@
 
     gamesDefault = {pkgs, ...}: {
       hardware.wooting.enable = true;
-      hardware.openrazer.enable = true;
+      hardware.openrazer.enable = false;
 
       imports = [
         self.nixosModules.osu
@@ -131,7 +131,7 @@
       programs.direnv.enable = true;
 
       nixpkgs.config.permittedInsecurePackages = [
-        "beekeeper-studio-6.1.1"
+        "beekeeper-studio-6.1.4"
       ];
 
       virtualisation = {
