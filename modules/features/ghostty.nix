@@ -9,14 +9,20 @@
       font-family = "JetBrainsMono Nerd Font";
       font-size = 13;
 
-      background-opacity = 0.92;
+      background-opacity = "0.92";
       cursor-style = "block";
 
       window-padding-x = 10;
       window-padding-y = 10;
 
-      shell-integration = "fish";
-      backspace-binding = "delete";
+      # Keep Ghostty's header bar so the tab strip stays visible under niri's
+      # prefer-no-csd, and show it even when only one tab is open.
+      window-decoration = "client";
+      window-show-tab-bar = "always";
+      gtk-tabs-location = "top";
+
+      # detect follows the running shell. This account's shell is bash.
+      shell-integration = "detect";
 
       # === mapped from Rose Pine Moon (Noctalia) ===
       foreground = "#e0def4"; # mOnSurface
@@ -59,19 +65,28 @@
       pkgs.writeText "ghostty-config" (toGhosttyConfig ghosttySettings);
 
     realUsers =
-      lib.filterAttrs (_: u: u.isNormalUser) config.users.users;
+      lib.filterAttrs (
+        _: u: u.isNormalUser && u.home != null
+      )
+      config.users.users;
   in {
-    environment.systemPackages = with pkgs; [
-      ghostty
-    ];
+    environment.systemPackages = [pkgs.ghostty];
 
-    system.activationScripts.ghosttyGhosttyConfig.text = lib.concatMapStrings (user: ''
-      mkdir -p ${user.home}/.config/ghostty
+    fonts.packages = [pkgs.nerd-fonts.jetbrains-mono];
 
-      ln -sf ${settingsFile} ${user.home}/.config/ghostty/config
+    # Ghostty loads config.ghostty first and lets those keys override the
+    # legacy config path. The managed file belongs at config.ghostty.
+    system.activationScripts.ghosttyConfig.text = lib.concatMapStrings (user: ''
+      install -d -m 755 -o ${user.name} -g ${user.group or "users"} \
+        ${user.home}/.config/ghostty
 
+      ln -sfn ${settingsFile} ${user.home}/.config/ghostty/config.ghostty
       chown -h ${user.name}:${user.group or "users"} \
-        ${user.home}/.config/ghostty/config
+        ${user.home}/.config/ghostty/config.ghostty
+
+      if [ -L ${user.home}/.config/ghostty/config ]; then
+        rm -f ${user.home}/.config/ghostty/config
+      fi
     '') (lib.attrValues realUsers);
   };
 }

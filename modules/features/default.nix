@@ -60,7 +60,6 @@
         self.nixosModules.hashi
         self.nixosModules.ankama
         self.nixosModules.backbeat
-        self.nixosModules.sunshine
         self.nixosModules.osumania-map-analyser
         self.nixosModules.maniaMapAnalyserApp
         self.nixosModules.interlude
@@ -100,7 +99,6 @@
         maniaMapAnalyserApp.enable = true;
         interlude.enable = true;
       };
-      programs.sunshine.enable = true;
     };
 
     developmentDefault = {pkgs, ...}: {
