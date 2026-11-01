@@ -52,7 +52,7 @@
 
     gamesDefault = {pkgs, ...}: {
       hardware.wooting.enable = true;
-      hardware.openrazer.enable = false;
+      hardware.openrazer.enable = true;
 
       imports = [
         self.nixosModules.osu

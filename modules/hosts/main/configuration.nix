@@ -10,9 +10,11 @@
       self.nixosModules.niri
       self.nixosModules.nixBuilder
       self.nixosModules.maestro-studio
+      self.nixosModules.hex
     ];
 
     programs.maestro-studio.enable = true;
+    programs.hex.enable = true;
 
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
