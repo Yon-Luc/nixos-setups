@@ -9,6 +9,7 @@
       self.nixosModules.gamesDefault
       self.nixosModules.niri
       self.nixosModules.nixBuilder
+      self.nixosModules.homelabCache
       self.nixosModules.maestro-studio
       self.nixosModules.hex
     ];
